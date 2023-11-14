@@ -29,3 +29,5 @@ jobs:
 
       - name: Get dependencies
         run: flutter pub get
+      - name: Build release app bundle
+        run: flutter build appbundle
