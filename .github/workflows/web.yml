@@ -36,7 +36,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Deploy to S3
-      run: aws s3 sync ./root/web/ s3://flutterwebdemo
+      run: aws s3 sync build/web/ s3://flutterwebdemo
       continue-on-error: true
 
     - name: Check deployment status
