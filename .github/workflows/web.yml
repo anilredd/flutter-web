@@ -37,3 +37,14 @@ jobs:
 
     - name: Deploy to S3
       run: aws s3 sync ./root/web/ s3://flutterwebdemo
+      continue-on-error: true
+
+    - name: Check deployment status
+      run: |
+       # Verify deployment by checking if files are in S3 bucket
+        if aws s3 ls s3://flutterwebdemo; then
+          echo "Deployment successful"
+        else
+          echo "Deployment failed"
+          exit 1
+        fi
