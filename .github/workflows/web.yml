@@ -36,15 +36,12 @@ jobs:
         aws-region: ap-south-1
 
     - name: Deploy to S3
-      run: aws s3 sync build/web/ s3://flutterwebdemo
-      continue-on-error: true
-
-    - name: Check deployment status
-      run: |
-       # Verify deployment by checking if files are in S3 bucket
-        if aws s3 ls s3://flutterwebdemo; then
-          echo "Deployment successful"
-        else
-          echo "Deployment failed"
-          exit 1
-        fi
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: flutterwebdemo
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'ap-south-1'   # optional: defaults to us-east-1
+        SOURCE_DIR: 'public'
